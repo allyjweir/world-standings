@@ -3,7 +3,7 @@
 <style>
 
     body {
-        background: #fcfcfa;
+        background: #030303;
     }
 
     .stroke {
@@ -13,23 +13,25 @@
     }
 
     .fill {
-        fill: #fff;
+        fill: #000628;
     }
 
     .graticule {
         fill: none;
-        stroke: #777;
+        stroke: #000;
         stroke-width: .5px;
         stroke-opacity: .5;
     }
 
     .land {
-        fill: #222;
+        stroke: #000;
+        stroke-width: .5px;
+        fill: none;
     }
 
     .boundary {
         fill: none;
-        stroke: #fff;
+        stroke: #000;
         stroke-width: .5px;
     }
 
@@ -41,6 +43,8 @@
 
         var width = 960,
         height = 960;
+
+        var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);
 
         var projection = d3.geo.orthographic()
         .scale(475)
@@ -84,7 +88,23 @@
         .attr("d", path);
 
         d3.json("world-110m.json", function(error, world) {
-            svg.insert("path", ".graticule")
+            var countries = topojson.feature(world, world.objects.countries).features,
+            neighbors = topojson.neighbors(world.objects.countries.geometries);
+
+            svg.selectAll(".country")
+            .data(countries)
+            .enter().insert("path", ".graticule")
+            .attr("class", "country")
+            .attr("d", path)
+            .style("fill",function(d){return color(Math.floor((Math.random()*10)+1));}); 
+
+        /*svg.insert("path", ".graticule")
+              .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+                    .attr("class", "boundary")
+                          .attr("d", path);*/
+
+        
+        svg.insert("path", ".graticule")
             .datum(topojson.feature(world, world.objects.land))
             .attr("class", "land")
             .attr("d", path);
@@ -92,7 +112,8 @@
             svg.insert("path", ".graticule")
             .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
             .attr("class", "boundary")
-            .attr("d", path);
+            .attr("d", path)
+           // .style("fill",color(1));
         });
 
         svg.on("mousemove", function() {
