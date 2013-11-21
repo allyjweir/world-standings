@@ -44,7 +44,7 @@
         var width = 960,
         height = 960;
 
-        var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);
+        var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);// JMcghee - Generates a collection of colours from a linear gradient using 10 stops
 
         var projection = d3.geo.orthographic()
         .scale(475)
@@ -89,14 +89,16 @@
 
         d3.json("world-110m.json", function(error, world) {
             var countries = topojson.feature(world, world.objects.countries).features,
-            neighbors = topojson.neighbors(world.objects.countries.geometries);
+            neighbors = topojson.neighbors(world.objects.countries.geometries);//JMcGhee - Load the geometries of each country to avoid awful-looking clipping
 
             svg.selectAll(".country")
             .data(countries)
             .enter().insert("path", ".graticule")
             .attr("class", "country")
             .attr("d", path)
-            .style("fill",function(d){return color(Math.floor((Math.random()*10)+1));}); 
+            .style("fill",function(d){return color(Math.floor((Math.random()*10)+1)); //JMcGhee - Drawing each country, style with a fill color from an embedded function (currently random but could be any predefined function)
+            
+            }); 
 
         /*svg.insert("path", ".graticule")
               .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
