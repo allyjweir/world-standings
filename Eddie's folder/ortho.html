@@ -1,5 +1,39 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
+<!--- Fra - this section sets up the draggable box --->
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Draggable - Default functionality</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<style>
+#draggable { width: 150px; height: 150px; padding: 0.5em; }
+</style>
+<script>
+$(function() {
+$( "#draggable" ).draggable();
+});
+</script>
+</head>
+
+
+<body>
+<div id="draggable" class="ui-widget-content">
+<p>Drag me around</p>
+<style> #dragable { 
+    top: 500px:
+} </style>
+</div>
+</body>
+</html>
+
+<!--- Fra - this section sets up the background map --->
 <style>
 
     body {
@@ -39,15 +73,46 @@
 <body>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script>
 
-        var width = 2000,
+
+<!---Fra - this section is the function to be able to drag the floating div --->
+<script>
+function clicked(d) {
+  var x, y, k;
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
+  }
+  
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+}
+
+
+// Fra -  <!--- this section plots the map --->	
+
+
+        var width = screen.availWidth;
         height = 800;
 
         var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);// JMcghee - Generates a collection of colours from a linear gradient using 10 stops
 
         var projection = d3.geo.mercator()
-        .scale(200)
+        .scale(100)
         .translate([width / 2, height / 2])
         .precision(.1);
 
@@ -95,8 +160,9 @@
 	   .on("click", clicked);
 	   
 	   var g = svg.append("g");
+
 	   
-        d3.json("world-110m.json", function(error, world) {
+        d3.json("world-110m.json", function(error, world) {{ cursorAt: { left: 5 } }
             var countries = topojson.feature(world, world.objects.countries).features,
             neighbors = topojson.neighbors(world.objects.countries.geometries);//JMcGhee - Load the geometries of each country to avoid awful-looking clipping
 
@@ -159,6 +225,8 @@
 		}
 
 		        d3.select(self.frameElement).style("height", height + "px");
+
+	
 
     </script>
 
