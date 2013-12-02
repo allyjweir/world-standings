@@ -41,15 +41,14 @@
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script>
 
-        var width = 960,
-        height = 960;
+        var width = 2000,
+        height = 800;
 
         var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);// JMcghee - Generates a collection of colours from a linear gradient using 10 stops
 
-        var projection = d3.geo.orthographic()
-        .scale(475)
+        var projection = d3.geo.mercator()
+        .scale(200)
         .translate([width / 2, height / 2])
-        .clipAngle(90)
         .precision(.1);
 
         var path = d3.geo.path()
@@ -118,11 +117,11 @@
            // .style("fill",color(1));
         });
 
-        svg.on("mousemove", function() {
+        /*svg.on("mousemove", function() {
             var p = d3.mouse(this);
             projection.rotate([lambda(p[0]), phi(p[1])]);
             svg.selectAll("path").attr("d", path);
-        });
+        });*/
 
 
 
