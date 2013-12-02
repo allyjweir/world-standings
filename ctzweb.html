@@ -3,22 +3,24 @@
 <style>
 
 .background {
-  fill: #aaa;
+  fill: #fff;
   pointer-events: all;
 }
 
-countries {
+
+
+#countries {
   fill: #aaa;
 }
 
-countries .active {
-  fill: orange;
+#countries .active {
+  fill: #FF6600;
 }
 
-country-borders {
+#country-borders {
   fill: none;
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 0.5px;
   stroke-linejoin: round;
   stroke-linecap: round;
   pointer-events: none;
@@ -28,13 +30,14 @@ country-borders {
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script>
 
 var width = 1500,
     height = 800,
     centered;
 
-var projection = d3.geo.mercator()
+var projection = d3.geo.miller()
     .scale(200)
     .translate([width / 2, height / 2])
     .precision(.1);
@@ -56,7 +59,7 @@ var g = svg.append("g");
 
 d3.json("world-110m.json", function(error, world) {
   g.append("g")
-      .attr("id", "states")
+      .attr("id", "countries")
     .selectAll("path")
       .data(topojson.feature(world, world.objects.countries).features)
     .enter().append("path")
@@ -65,7 +68,7 @@ d3.json("world-110m.json", function(error, world) {
 
   g.append("path")
       .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-      .attr("id", "state-borders")
+      .attr("id", "country-borders")
       .attr("d", path);
 });
 
@@ -84,7 +87,7 @@ function clicked(d) {
     k = 1;
     centered = null;
   }
-
+  
   g.selectAll("path")
       .classed("active", centered && function(d) { return d === centered; });
 
