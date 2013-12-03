@@ -10,11 +10,9 @@ var projection = d3.geo.azimuthal()
 var circle = d3.geo.greatCircle()
     .origin(projection.origin());
 
-svg.append("rect")
-    .attr("class", "background")
-    .attr("width", width)
-    .attr("height", height)
-    .on("click", clicked);
+var width = 1500,
+    height = 800,
+    centered;
     
 var scale = 380;
 
@@ -23,16 +21,29 @@ var path = d3.geo.path()
 
 var svg = d3.select("#body").append("svg:svg")
     .attr("width",  800)
-    .attr("height", 800)
+    .attr("height", 800);
+   
+   
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", function() {if (done) startAnimation(); else stopAnimation();});
+    
+var g = svg.append("g");
 
 if (frameElement) frameElement.style.height = '800px';
 
 d3.json("world-countries.json", function(collection) {
   feature = svg.selectAll("path")
-      .data(collection.features)
-    .enter().append("svg:path")
-      .attr("d", clip);
-
+		  .data(collection.features)
+		  .enter().append("svg:path")
+		  .on("mouseover", function(d) { d3.select(this).style("fill",
+		  "#9dc1e0"); })
+		  .on("mouseout", function(d) { d3.select(this).style("fill",
+		  "#aaa"); })      
+		  .attr("d", clip);
+      
   feature.append("svg:title")
       .text(function(d) { return d.properties.name; });
 
@@ -51,7 +62,7 @@ function startAnimation() {
   done = false;
   d3.timer(function() {
     var origin = projection.origin();
-    origin = [origin[0] + .18, origin[1] + .06];
+    origin = [origin[0] + 1, origin[1] + 0];
     projection.origin(origin);
     circle.origin(origin);
     refresh();
@@ -87,27 +98,10 @@ function reframe(css) {
 }
 
 function clicked(d) {
-  var x, y, k;
-
-  if (d && centered !== d) {
-    var centroid = path.centroid(d);
-    x = centroid[0];
-    y = centroid[1];
-    k = 4;
-    centered = d;
-  } else {
-    x = width / 2;
-    y = height / 2;
-    k = 1;
-    centered = null;
-  }
-  
-  g.selectAll("path")
-      .classed("active", centered && function(d) { return d === centered; });
-
-  g.transition()
-      .duration(750)
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-      .style("stroke-width", 1.5 / k + "px");
-  g.origin([-71.03,42.37])
+   stopAnimation();  
+   p = projection.invert(d3.mouse(this));
+   console.log(p);                                                          
+   projecion.rotate([-(p[0]), -(p[1])]);
+   svg.selectAll("path").attr("d", path);
+   refresh();
 }
