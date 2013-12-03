@@ -3,7 +3,7 @@ var feature // eventually: all svg paths (countries) of the world
 
 var projection = d3.geo.azimuthal()
     .scale(380)
-    .origin([-71.03,42.37])
+    .origin([0,0])
     .mode("orthographic")
     .translate([400, 400]);
 
@@ -41,21 +41,19 @@ d3.json("world-countries.json", function(collection) {
 		  .on("mouseover", function(d) { d3.select(this).style("fill",
 		  "#9dc1e0"); })
 		  .on("mouseout", function(d) { d3.select(this).style("fill",
-		  "#aaa"); })      
+		  "#aaa"); })
+		  .on("mousedown", clicked)      
 		  .attr("d", clip);
       
   feature.append("svg:title")
       .text(function(d) { return d.properties.name; });
 
   startAnimation();
-  d3.select('#animate').on('click', function () {
-    if (done) startAnimation(); else stopAnimation();
-  });
+
 });
 
 function stopAnimation() {
   done = true;
-  d3.select('#animate').node().checked = false;
 }
 
 function startAnimation() {
@@ -70,17 +68,6 @@ function startAnimation() {
   });
 }
 
-function animationState() {
-  return 'animation: '+ (done ? 'off' : 'on');
-}
-
-
-
-d3.select("select").on("change", function() {
-  stopAnimation();
-  projection.mode(this.value).scale;
-  refresh(750);
-});
 
 var done;
 
@@ -101,7 +88,12 @@ function clicked(d) {
    stopAnimation();  
    p = projection.invert(d3.mouse(this));
    console.log(p);                                                          
-   projecion.rotate([-(p[0]), -(p[1])]);
+   var origin = projection.origin();
+   origin = [p[0], p[1]];
+   projection.origin(origin);
+   circle.origin(origin);
+   refresh();
    svg.selectAll("path").attr("d", path);
    refresh();
+   
 }
