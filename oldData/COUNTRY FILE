@@ -1,0 +1,19 @@
+COUNTRY FILE
+
+-need the country name, and then...
+
+
+need to make 2 more globe view styles
+
+how to pull the data in?
+
+apparently doesnt work in chrome (huzzah)
+
+Someone needs to build the wrapper website UI
+
+To Do!!
+--------
+-click to zoom (zoom and show floating div)
+-make flat one first
+-make a slider to move the globe instead of mouse or auto movement.
+-convert csv into json. json ftw.
