@@ -1,15 +1,12 @@
 <!DOCTYPE html>
+
 <meta charset="utf-8">
-
-
-<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
+
 <style>
 #draggable1 { width: 150px; height: 150px; padding: 0.7em; }
 #draggable2 { width: 150px; height: 150px; padding: 0.7em; }
@@ -21,7 +18,6 @@ $(function() { $( "#draggable1" ).draggable({ containment: "window" }); });
 $(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
 
 </script>
-</head>
 
 
 <body>
@@ -45,10 +41,7 @@ $(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
 
 </div>
 </body>
-</html>
-
 <script>
-
 $( "#hider" ).click(function() {
   $( "#draggable1" ).hide( "drop", { direction: "down" }, "slow" );
   $( "#draggable2" ).hide( "drop", { direction: "down" }, "slow" );
@@ -58,9 +51,9 @@ $( "#shower" ).click(function() {
   $( "#draggable1" ).show( "slide", { direction: "down" }, "slow" );
   $( "#draggable2" ).show( "slide", { direction: "down" }, "slow" );
 });
- </script> 
-
+    </script>
 <script>
+
 function clicked(d) {
   var x, y, k;
 
@@ -86,4 +79,3 @@ function clicked(d) {
       .style("stroke-width", 1.5 / k + "px");
 }
 </script>
-
