@@ -16,6 +16,8 @@ var width = 1500,
     
 var scale = 380;
 
+var prev;
+
 var path = d3.geo.path()
     .projection(projection);
 
@@ -28,7 +30,7 @@ svg.append("rect")
     .attr("class", "background")
     .attr("width", width)
     .attr("height", height)
-    .on("click", function() {if (done) startAnimation(); else stopAnimation();});
+    .on("click", function() {projection.origin([0,0]); circle.origin(projection.origin); if (done) startAnimation(); else stopAnimation();});
     
 var g = svg.append("g");
 
@@ -38,12 +40,8 @@ d3.json("world-countries.json", function(collection) {
   feature = svg.selectAll("path")
 		  .data(collection.features)
 		  .enter().append("svg:path")
-		  .on("mouseover", function(d) { d3.select(this).style("fill",
-		  "#9dc1e0"); })
-		  .on("mouseout", function(d) { d3.select(this).style("fill",
-		  "#aaa"); })
 		  .on("mousedown", clicked)      
-		  .attr("d", clip);
+		  .attr("d", clip)
       
   feature.append("svg:title")
       .text(function(d) { return d.properties.name; });
@@ -63,6 +61,7 @@ function startAnimation() {
     origin = [origin[0] + 1, origin[1] + 0];
     projection.origin(origin);
     circle.origin(origin);
+    if(prev) prev.style("fill", "#aaa");
     refresh();
     return done;
   });
@@ -85,15 +84,18 @@ function reframe(css) {
 }
 
 function clicked(d) {
-   stopAnimation();  
+   stopAnimation();
+   if(prev) prev.style("fill", "#aaa");
+   prev = d3.select(this);
+   prev.style("fill", "#9dc1e0");
    p = projection.invert(d3.mouse(this));
-   console.log(p);                                                          
+   
+                                                          
    var origin = projection.origin();
    origin = [p[0], p[1]];
    projection.origin(origin);
    circle.origin(origin);
-   refresh();
-   svg.selectAll("path").attr("d", path);
-   refresh();
+   refresh(1250); // set to 0 for non funky transitions
+   prev.style("fill", "#9dc1e0");
    
 }
