@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="js/floatingMenus.js"
+<style>
+#draggable1 { width: 150px; height: 150px; padding: 0.7em; }
+#draggable2 { width: 150px; height: 150px; padding: 0.7em; }
+</style>
+</head>
+<body>
+
+<div class="main">
+
+<button id="hider">Hide</button>
+<button id="shower">Show</button>
+
+<div id="draggable1" class="ui-widget-content">
+<span>
+<p>Fra1</p>
+</span>
+</div>
+
+<div id="draggable2" class="ui-widget-content">
+<span>
+<p>Fra2</p>
+</span>
+</div>
+
+</div>
+</body>
+</html>
+
