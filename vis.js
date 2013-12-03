@@ -16,12 +16,16 @@ var width = 1500,
     
 var scale = 380;
 
-var prev;
+var prev; // stores previously selected country
+
+var activeColour = "orange";
+var countryColour = "#aaa"
+
 
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("#body").append("svg:svg")
+var svg = d3.select("#map").append("svg:svg")
     .attr("width",  800)
     .attr("height", 800);
    
@@ -61,7 +65,7 @@ function startAnimation() {
     origin = [origin[0] + 1, origin[1] + 0];
     projection.origin(origin);
     circle.origin(origin);
-    if(prev) prev.style("fill", "#aaa");
+    if(prev) prev.style("fill", countryColour);
     refresh();
     return done;
   });
@@ -85,9 +89,9 @@ function reframe(css) {
 
 function clicked(d) {
    stopAnimation();
-   if(prev) prev.style("fill", "#aaa");
+   if(prev) prev.style("fill", countryColour);
    prev = d3.select(this);
-   prev.style("fill", "#9dc1e0");
+   prev.style("fill", activeColour);
    p = projection.invert(d3.mouse(this));
    
                                                           
@@ -95,7 +99,6 @@ function clicked(d) {
    origin = [p[0], p[1]];
    projection.origin(origin);
    circle.origin(origin);
-   refresh(1250); // set to 0 for non funky transitions
-   prev.style("fill", "#9dc1e0");
+   refresh(750); // set to 0 for non funky transitions
    
 }
