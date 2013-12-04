@@ -1,38 +1,3 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-.background {
-  fill: #fff;
-  pointer-events: all;
-}
-
-
-
-#countries {
-  fill: #aaa;
-}
-
-#countries .active {
-  fill: #9dc1e0;
-}
-
-#country-borders {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 0.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-</style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
-<script>
-
 var width = 1500,
     height = 800,
     centered;
@@ -96,6 +61,4 @@ function clicked(d) {
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
-
-</script>
 
