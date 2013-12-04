@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="interface.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<style>
+#draggable1 { width: 150px; height: 150px; padding: 0.7em; }
+#draggable2 { width: 150px; height: 150px; padding: 0.7em; }
+</style>
+<script>
+
+$(function() { $( "#draggable1" ).draggable({ containment: "window" }); });
+
+$(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
+
+</script>
+
+
+<body>
+
+<div class="main">
+
+<button id="hider">Hide</button>
+<button id="shower">Show</button>
+
+<div id="draggable1" style ="width:110px; height:80px; overflow: auto;" class="ui-widget-content">
+<span>
+<select>
+  <option>Health GM</option>
+  <option>Health SM</option>
+  <option>Health BM</option>
+  <option>Education GM</option>
+  <option>Education SM</option>
+  <option>Education BM</option>
+  <option>ImpWater G</option>
+  <option>ImpWater S</option>
+  <option>ImpWater B</option>
+  <option>Population G</option>
+  <option>Population S</option>
+  <option>Population B</option>
+  <option>GDP G</option>
+  <option>GDP G</option>
+  <option>GDP G</option>
+  <option>Incomepp G</option>
+  <option>Incomepp S</option>
+  <option>Incomepp B</option>
+  <option>Debt G</option>
+  <option>Debt S</option>
+  <option>Debt B</option>
+  <option>Continent 1</option>
+  <option>Continent 2</option>
+  <option>Continent 3</option>
+</select>
+</span>
+</div>
+
+<div id="draggable2" style ="width 110px; height:80px; overflow: auto;" class="ui-widget-content">
+<span>
+<select>
+  <option>Gold Medal</option>
+  <option>Silver Medal</option>
+  <option>Bronze Medal</option>
+</select>
+</span>
+</div>
+
+</div>
+</body>
+<script>
+$( "#hider" ).click(function() {
+  $( "#draggable1" ).hide( "drop", { direction: "down" }, "slow" );
+  $( "#draggable2" ).hide( "drop", { direction: "down" }, "slow" );
+  });
+ 
+$( "#shower" ).click(function() {
+  $( "#draggable1" ).show( "slide", { direction: "down" }, "slow" );
+  $( "#draggable2" ).show( "slide", { direction: "down" }, "slow" );
+});
+    </script>
+<script>
+
+function clicked(d) {
+  var x, y, k;
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
+  }
+  
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+}
+</script>

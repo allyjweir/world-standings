@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+	<title>IS3 Map View</title>
+</head>
+<body>
+	<div id="map">
+		<link href="mapStyle.css" rel="stylesheet"> 
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script src="http://d3js.org/topojson.v1.min.js"></script>
+		<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+		<script src="mapVis.js"></script>
+    </div>
+</body>
+</html>
+
