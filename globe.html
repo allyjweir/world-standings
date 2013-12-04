@@ -1,48 +1,26 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html>
-  <head>
-    <script src="http://mbostock.github.com/d3/d3.js"></script>
-    <script src="http://mbostock.github.com/d3/d3.geo.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
-    <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/colorbrewer/colorbrewer.css"/>
-    <style type="text/css">
+<head>
+        <title>IS3 Views</title>
+</head>
+<body>
+        <div id="map">
+                <link href="mapStyle.css" rel="stylesheet">
+                <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
+                <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/colorbrewer/colorbrewer.css"/>
+          <div><label for="proj">Projection: </label><select id="proj">
+                     <option value="flatMap">Flat Map</option>
+                     <option value="globe" selected>Globe</option>
+             </select></div>
 
-svg {
-  width:  800px;
-  height: 800px;
-  pointer-events: all;
-}
+          <script src="http://mbostock.github.com/d3/d3.js"></script>
+                    <script src="http://mbostock.github.com/d3/d3.geo.js"></script>
+                    <script src="http://d3js.org/topojson.v1.min.js"></script>
 
-circle {
-  fill: #;
-}
-
-path {
-  fill: #aaa;
-  stroke: #fff;
-}
-
-#header {
-  top: 7px;
-  left: 685px;
-  text-align: right;
-  width: auto;
-}
-
-#header div {
-  font-size: 12px;
-}
-
-.tip { color: #999; }
-    </style>
-  </head>
-  <body>
-    <div id="body">
-        <div><label for="animate">animate:</label>
-          <input id="animate" type="checkbox" checked>
-        </div>
+                <script src="vis.js"></script>
     </div>
-    <script src="vis.js"></script>
-  </body>
+</body>
 </html>
+
 
