@@ -23,13 +23,14 @@ svg.append("rect")
 var g = svg.append("g");
 
 d3.json("world-110m.json", function(error, world) {
-  g.append("g")
+  g.append("g")		
       .attr("id", "countries")
     .selectAll("path")
       .data(topojson.feature(world, world.objects.countries).features)
     .enter().append("path")
       .attr("d", path)
       .on("click", clicked);
+
 
   g.append("path")
       .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
@@ -61,4 +62,3 @@ function clicked(d) {
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
-

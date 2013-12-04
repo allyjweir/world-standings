@@ -17,7 +17,8 @@ var svg = d3.select("#map").append("svg")
 var tooltip = d3.select("#map").append("div")
     .attr("class", "tooltip");
     
-var g = svg.append("g");
+
+
 
 svg.append("rect")
     .attr("class", "background")
@@ -32,47 +33,31 @@ queue()
 
 function ready(error, world, names) {
 
-  g.append("g")
-      .attr("id", "countries")
-    .selectAll("path")
-      .data(topojson.feature(world, world.objects.countries).features)
-    .enter().append("path")
-      .attr("d", path)
-      .on("click", clicked);
- 
   var countries = topojson.feature(world, world.objects.countries).features,
-      n = countries.length;
+  	n = countries.length;
 
   countries = countries.filter(function(d) {
-    return names.some(function(n) {
-      if (d.id == n.id) return d.name = n.name;
-    });
+     return names.some(function(n) {
+     	if (d.id == n.id) return d.name = n.name;
+     });
   }).sort(function(a, b) {
-    return a.name.localeCompare(b.name);
+  	return a.name.localeCompare(b.name);
   });
 
-var country = svg.selectAll(".country").data(countries);
+  svg.append("g")
+  	.attr("id", "countries")
+  	.selectAll("path")
+  	.data(countries)
+  	.enter().append("path")
+  	.attr("d", path)
+  	.attr("title", function(d) { return d.name; })
+  	.on("click", clicked);
 
-  country
-      .enter()
-      .insert("path")
-      .attr("class", "country")   
-      .attr("id", "countries") 
-      .attr("title", function(d) { return d.name; })
-      .attr("d", path)
-      .on("click", clicked);
+  svg.append("path")
+   	.datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+   	.attr("id", "country-borders")
+   	.attr("d", path);
 
-
-  country
-	.on("mouseover", function(d) { d3.select(this).style("fill",
-	"#9dc1e0"); })
-	.on("mouseout", function(d) { d3.select(this).style("fill",
-	"#aaa"); });
-	
-   g.append("path")
-	.datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-     .attr("id", "country-borders")
-     .attr("d", path);
 }
 
 function clicked(d) {
@@ -91,10 +76,10 @@ function clicked(d) {
     centered = null;
   }
   
-  g.selectAll("path")
+  svg.selectAll("path")
       .classed("active", centered && function(d) { return d === centered; });
 
-  g.transition()
+  svg.transition()
       .duration(750)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
