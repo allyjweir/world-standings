@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="jquery-ui.css">
+<link rel="stylesheet" href="interface.css">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
@@ -27,15 +28,24 @@ $(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
 <button id="hider">Hide</button>
 <button id="shower">Show</button>
 
-<div id="draggable1" class="ui-widget-content">
+<div id="draggable1" style ="width:80px; height:50px; overflow: auto;" class="ui-widget-content">
 <span>
-<p>Fra1</p>
+<select>
+  <option>Milk</option>
+  <option>Coffee</option>
+  <option>Tea</option>
+</select>
+
 </span>
 </div>
 
-<div id="draggable2" class="ui-widget-content">
+<div id="draggable2" style ="width:80px; height:50px; overflow: auto;" class="ui-widget-content">
 <span>
-<p>Fra2</p>
+<select>
+  <option>Fra</option>
+  <option>Is</option>
+  <option>Gay</option>
+</select>
 </span>
 </div>
 
