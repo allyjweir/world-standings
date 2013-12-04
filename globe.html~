@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div id="map">
-		<link href="globeStyle.css" rel="stylesheet"> 
+		<link href="mapStyle.css" rel="stylesheet"> 
 		<link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
 		<link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/colorbrewer/colorbrewer.css"/>
           <div><label for="proj">Projection: </label><select id="proj">
@@ -18,7 +18,7 @@
     		<script src="http://mbostock.github.com/d3/d3.geo.js"></script>
     		<script src="http://d3js.org/topojson.v1.min.js"></script>
 
-		<script src="globeVis.js"></script>
+		<script src="vis.js"></script>
     </div>
 </body>
 </html>

@@ -1,0 +1,54 @@
+ stopAnimation();
+  var x, y, k;
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
+  }
+  
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+      
+      
+      
+          <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
+    <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/colorbrewer/colorbrewer.css"/>
+      
+      
+      
+      
+      
+      
+         var o1 = projection.invert(d3.mouse(this));
+   var lat = o1[0]
+   lon = o1[1];
+   console.log([o1]);
+   projection.origin([o1]);
+   circle.origin([o1]);
+   refresh();
+   #
+   
+   
+   
+      stopAnimation();
+    
+   p = projection.invert(d3.mouse(this));
+                                                          
+   var origin = projection.origin();
+   origin = [p[0], p[1]];
+   projection.origin(origin);
+   circle.origin(origin);
+   refresh();
