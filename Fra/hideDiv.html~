@@ -28,7 +28,7 @@ $(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
 <button id="hider">Hide</button>
 <button id="shower">Show</button>
 
-<div id="draggable1" style ="width:100px; height:80px; overflow: auto;" class="ui-widget-content">
+<div id="draggable1" style ="width:110px; height:80px; overflow: auto;" class="ui-widget-content">
 <span>
 <select>
   <option>Health GM</option>
@@ -60,7 +60,7 @@ $(function() { $( "#draggable2" ).draggable({ containment: "window" }); });
 </span>
 </div>
 
-<div id="draggable2" style ="width 100px; height:80px; overflow: auto;" class="ui-widget-content">
+<div id="draggable2" style ="width 110px; height:80px; overflow: auto;" class="ui-widget-content">
 <span>
 <select>
   <option>Gold Medal</option>

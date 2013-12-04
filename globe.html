@@ -5,22 +5,85 @@
         <title>IS3 Views</title>
 </head>
 <body>
+<div class="main">
+                <link rel="stylesheet" href="jquery-ui.css">
+		<link rel="stylesheet" href="interface.css">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+	<button id="hider">Hide</button>
+	<button id="shower">Show</button>
+</div>
+<div id="draggable1" style ="width:130px; height:80px; overflow: auto;" class="ui-widget-content">
+		<span>
+			<select>
+			  <option>Health GM</option>
+			  <option>Health SM</option>
+			  <option>Health BM</option>
+			  <option>Education GM</option>
+			  <option>Education SM</option>
+			  <option>Education BM</option>
+			  <option>ImpWater G</option>
+			  <option>ImpWater S</option>
+			  <option>ImpWater B</option>
+			  <option>Population G</option>
+			  <option>Population S</option>
+			  <option>Population B</option>
+			  <option>GDP G</option>
+			  <option>GDP G</option>
+			  <option>GDP G</option>
+			  <option>Incomepp G</option>
+			  <option>Incomepp S</option>
+			  <option>Incomepp B</option>
+			  <option>Debt G</option>
+			  <option>Debt S</option>
+			  <option>Debt B</option>
+			  <option>Continent 1</option>
+			  <option>Continent 2</option>
+			  <option>Continent 3</option>
+			</select>
+		</span>
+</div>
+	<div id="draggable2" style ="width 130px; height:80px; overflow: auto;" class="ui-widget-content">
+	<span>
+		<select>
+ 			 <option>Gold Medal</option>
+			 <option>Silver Medal</option>
+			 <option>Bronze Medal</option>
+		</select>
+	</span>
+	</div>
+</div>
+</body>
         <div id="map">
                 <link href="mapStyle.css" rel="stylesheet">
                 <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/style.css"/>
                 <link type="text/css" rel="stylesheet" href="http://mbostock.github.com/d3/talk/20111018/colorbrewer/colorbrewer.css"/>
-          <div><label for="proj">Projection: </label><select id="proj">
-                     <option value="flatMap">Flat Map</option>
-                     <option value="globe" selected>Globe</option>
-             </select></div>
 
-          <script src="http://mbostock.github.com/d3/d3.js"></script>
-                    <script src="http://mbostock.github.com/d3/d3.geo.js"></script>
-                    <script src="http://d3js.org/topojson.v1.min.js"></script>
+	   <script src="http://mbostock.github.com/d3/d3.js"></script>
+           <script src="http://mbostock.github.com/d3/d3.geo.js"></script>
+           <script src="http://d3js.org/topojson.v1.min.js"></script>
+           <script src="vis.js"></script>
+        </div>
+<script>
+	$( "#hider" ).click(function() {
+	  $( "#draggable1" ).hide( "drop", { direction: "down" }, "slow" );
+	  $( "#draggable2" ).hide( "drop", { direction: "down" }, "slow" );
+	  });
+	 
+	$( "#shower" ).click(function() {
+	  $( "#draggable1" ).show( "slide", { direction: "down" }, "slow" );
+	  $( "#draggable2" ).show( "slide", { direction: "down" }, "slow" );
+	});
+</script>
 
-                <script src="vis.js"></script>
-    </div>
-</body>
+<script>
+	$(function() { $( "#draggable1" ).draggable(); });
+	$(function() { $( "#draggable2" ).draggable(); });
+</script>
+
+	
+
 </html>
 
 
