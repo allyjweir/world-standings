@@ -7,6 +7,8 @@ var projection = d3.geo.azimuthal()
     .mode("orthographic")
     .translate([400, 400]);
 
+var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);
+
 var circle = d3.geo.greatCircle()
     .origin(projection.origin());
 
@@ -48,6 +50,7 @@ d3.json("world-countries.json", function(collection) {
 		  .enter().append("svg:path")
 		  .on("mousedown", clicked)      
 		  .attr("d", clip)
+      .style("fill",function(d){return color(Math.floor((Math.random()*10)+1))})
       
   feature.append("svg:title")
       .text(function(d) { return d.properties.name; });
@@ -91,7 +94,7 @@ function reframe(css) {
 
 function clicked(d) {
    stopAnimation();
-   if(prev) prev.style("fill", countryColour);
+   if(prev) prev.style("fill", function(d){return color(Math.floor((Math.random()*10)+1))});
    prev = d3.select(this);
    prev.style("fill", activeColour);
    p = projection.invert(d3.mouse(this));
