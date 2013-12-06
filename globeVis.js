@@ -7,16 +7,14 @@ var projection = d3.geo.azimuthal()
     .mode("orthographic")
     .translate([400, 400]);
 
-var color = d3.scale.linear().domain([1,10]).range(['#0c0a40', '#2e71ff']);
-
 var circle = d3.geo.greatCircle()
     .origin(projection.origin());
 
-var width = 1500,
-    height = 800,
+var width = 400,
+    height = 400,
     centered;
     
-var scale = 380;
+var scale = width/2;
 
 var prev; // stores previously selected country
 
@@ -28,8 +26,8 @@ var path = d3.geo.path()
     .projection(projection);
 
 var svg = d3.select("#map").append("svg:svg")
-    .attr("width",  800)
-    .attr("height", 800);
+    .attr("width", width)
+    .attr("height", height);
    
    
 svg.append("rect")
@@ -46,11 +44,10 @@ if (frameElement) frameElement.style.height = '800px';
 
 d3.json("world-countries.json", function(collection) {
   feature = svg.selectAll("path")
-		  .data(collection.features)
-		  .enter().append("svg:path")
-		  .on("mousedown", clicked)      
-		  .attr("d", clip)
-      .style("fill",function(d){return color(Math.floor((Math.random()*10)+1))})
+                 .data(collection.features)
+                 .enter().append("svg:path")
+                 .on("mousedown", clicked)
+                 .attr("d", clip)
       
   feature.append("svg:title")
       .text(function(d) { return d.properties.name; });
@@ -94,7 +91,7 @@ function reframe(css) {
 
 function clicked(d) {
    stopAnimation();
-   if(prev) prev.style("fill", function(d){return color(Math.floor((Math.random()*10)+1))});
+   if(prev) prev.style("fill", countryColour);
    prev = d3.select(this);
    prev.style("fill", activeColour);
    p = projection.invert(d3.mouse(this));
