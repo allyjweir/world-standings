@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>Team Burrito | IS3 | MAP VIEW</title>
+<style>
+#top{
+  float:left;  
+  margin:0 0 10px 10%;
+  width:50%;
+}
+
+h2{
+  margin: 10px 30%;
+  width: 40%;
+  text-align: center;
+  padding: 2px 4px;
+  clear: both;
+}
+
+#container {
+  margin:0 10%;
+  padding:20px;
+  height:100%;
+  clear:both;
+}
+.country {fill:#ccc;}
+
+
+.hidden { 
+  display: none; 
+}
+div.tooltip {
+  color: #222; 
+  background: #fff; 
+  padding: .5em; 
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px; 
+  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+  opacity: 0.9; 
+  position: absolute;
+}
+
+#info{
+  margin:10px 10%;
+  background: #fff;
+  border: 2px solid #ccc;
+  padding:10px;
+}
+</style>
+</head>
+<body>
+
+  <div id="container"></div>
+
+<script src="js/d3.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+
+<script>
+//queue
+(function(){function n(n){function t(){for(;f=a<c.length&&n>p;){var u=a++,t=c[u],r=l.call(t,1);r.push(e(u)),++p,t[0].apply(null,r)}}function e(n){return function(u,l){--p,null==d&&(null!=u?(d=u,a=s=0/0,r()):(c[n]=l,--s?f||t():r()))}}function r(){null!=d?v(d):i?v(d,c):v.apply(null,[d].concat(c))}var o,f,i,c=[],a=0,p=0,s=0,d=null,v=u;return n||(n=1/0),o={defer:function(){return d||(c.push(arguments),++s,t()),o},await:function(n){return v=n,i=!1,s||r(),o},awaitAll:function(n){return v=n,i=!0,s||r(),o}}}function u(){}"undefined"==typeof module?self.queue=n:module.exports=n,n.version="1.0.4";var l=[].slice})();
+
+var width = document.getElementById('container').offsetWidth-60;
+var height = width / 2;
+
+var topo,projection,path,svg,g;
+
+var tooltip = d3.select("body").append("div").attr("class", "tooltip hidden");
+
+setup(width,height);
+
+function setup(width,height){
+
+  projection = d3.geo.mercator().translate([0, 0]).scale(width/8);
+
+  path = d3.geo.path().projection(projection);
+
+  svg = d3.select("#container").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  var outterg = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  g = outterg.append("g").attr("id", "innerg");
+
+}
+
+function addCommas(nStr){
+  nStr += '';
+  x = nStr.split('.');
+  x1 = x[0];
+  x2 = x.length > 1 ? '.' + x[1] : '';
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  }
+  return x1 + x2;
+}
+
+queue()
+    .defer(d3.json, "world110-m2.json")
+    .defer(d3.csv, "again.csv")
+    .await(ready);
+
+function ready(error, world, Pop_silver) {
+
+  //lets process the Pop_silver data
+
+  //how to grab maximum
+  //var max = d3.max(Pop_silver, function(d) { return parseInt(d.Pop_silver); });
+
+  //lets sort by Pop_silver
+  var sorted = Pop_silver.sort(function(a, b){ return d3.descending(parseInt(a.Pop_silver), parseInt(b.Pop_silver)); });
+
+  var color = d3.scale.linear()
+      .domain([1,300])
+      .range(["#F7FBFF","#08306B"]);
+
+    topo = topojson.feature(world, world.objects.countries).features;
+
+    var country = d3.select("#innerg").selectAll(".country").data(topo);
+
+    //ofsets
+    var offsetL = document.getElementById('container').offsetLeft+30;
+    var offsetT =document.getElementById('container').offsetTop-30;
+
+    country.enter().insert("path")
+      .attr("class", "country")
+      .attr("d", path)
+      .attr("id", function(d,i) { return d.id; })
+      .attr("title", function(d,i) { return d.properties.name; })
+      .style("fill", function(d,i) { 
+        var m = Pop_silver.filter(function(f){return f.country == d.id});
+        if(m.length>0){
+            return color(m[0].Pop_silver);
+        }
+      })
+      .style("stroke", "#111")
+      .on("mousemove", function(d,i) {
+        var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+
+        var pop = ' | Pop_silver: ';
+        var m = Pop_silver.filter(function(f){return f.country == d.id});
+        if(m.length>0){
+          pop += addCommas(m[0].Pop_silver);
+        }
+
+        tooltip.classed("hidden", false)
+          .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+          .html(d.properties.name+pop);
+      })
+      .on("mouseout",  function(d,i) {
+        tooltip.classed("hidden", true);
+      });
+
+    //create a custom legend
+    var legend = '';
+
+    colors.forEach(function(f,i){
+      if(i==0){
+        var label = '0-'+addCommas(split[i]);
+      } else if(i==8){
+        var label = addCommas(split[i-1])+'-'+addCommas(sorted[0].Pop_silver);
+      } else {
+        var label = addCommas(split[i-1])+'-'+addCommas(split[i]);
+      }
+      legend += '<div style="background:'+f+';"></div><label>'+label+'</label>';
+    });
+
+    d3.select("#legend").html(legend);
+
+
+    //create sorted html table
+    var table = d3.select("#info").append("table"),
+        thead = table.append("thead"),
+        tbody = table.append("tbody"),
+        theadtr = thead.append("tr");
+
+        theadtr.append("th").text("Country");
+        theadtr.append("th").text("Pop_silver");
+
+    sorted.forEach(function(c){
+      //tbody.append("tr").html('<td>'+c.country+'</td><td>'+addCommas(c.Pop_silver)+'</td>');
+      var cname = topo.filter(function(f){ return f.id == c.country });
+      if(cname.length>0){
+        tbody.append("tr").html('<td>'+cname[0].properties.name+'</td><td>'+addCommas(c.Pop_silver)+'</td>');
+      }
+    });
+
+}
+
+</script>
+</body>
+</html>
