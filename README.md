@@ -7,12 +7,12 @@ Taking WHO and Olympic Games medal tables and finding meaningful relationships f
 
 Instructions
 ==========
-``
+
 Open a terminal  
 Navigate to the repo  
-Run 'python -m SimpleHTTPServer'  
-Direct browser to '0.0.0.0:8000'  
-``
+Run ``python -m SimpleHTTPServer``  
+Direct browser to ``0.0.0.0:8000``  
+
 
 Authors and Contributors
 ==========
