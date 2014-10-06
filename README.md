@@ -1,13 +1,25 @@
-is3-project
+World Standings
 ===========
 
 Third year Interactive Systems 3 project at the University of Glasgow.
 
-Taking WHO and Olympic Games medal tables and finding meaningful relationships from a prototype stage to a basic Java implementation.
+Taking WHO and Olympic Games medal tables and finding meaningful relationships from a prototype stage to an interactive JavaScript visualisation in the browser.
 
-Instructions:
-To run open a terminal in the repo folder and type 'python -m SimpleHTTPServer' then direct your browser to 0.0.0.0:8000. 
-That's it!
+Instructions
+==========
+``
+Open a terminal  
+Navigate to the repo  
+Run 'python -m SimpleHTTPServer'  
+Direct browser to '0.0.0.0:8000'  
+``
 
-Team members:
-Ally Weir, Matthew Paterson, Eddie Graham, Stefan Balling, Fraser Leishman, Lewis Mcgeechan and Josh McGhee
+Authors and Contributors
+==========
+@allyjweir  
+@arednarwal  
+@edditindahouse  
+@Stefan101  
+@fjleishman  
+@levvism  
+@joshpmcghee  
